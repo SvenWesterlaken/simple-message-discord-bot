@@ -15,13 +15,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == client.user or message.author.bot:
+        # We don't answer to bots or if we are logged in as the bot
         return
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    # Send back the legnth of the message together with the users name
+    await message.channel.send('Hi, ' + message.author.name + '! Your message was ' + str(len(message.content)) + ' characters long.')
 
-    if message.content.startswith('$bye'):
-        await message.channel.send('Bye!')
-
+# Run the client with the API key from the environment set
 client.run(os.getenv('DISCORD_API_KEY'));
