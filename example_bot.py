@@ -13,11 +13,20 @@ intents.message_content = True
 client = commands.Bot(command_prefix='!mr ', intents=intents)
 
 class QuestionSetupView(discord.ui.View):
-    
+
+    def __init__(self):
+        super().__init__()
+
+        # Make sure we have no timeout
+        self.timeout = None
+
     @discord.ui.button(label='Ask a Question', style=discord.ButtonStyle.blurple)
     async def ask_question(self, interaction: discord.Interaction, button: discord.ui.Button):
-        print(interaction)
         await interaction.response.send_message('You asked a question!')
+
+    async def interaction_check(self, interaction: discord.Interaction):
+        # We can add a check if we want to block the interaction for non-admins
+        return True
 
 @client.event
 async def on_ready():
