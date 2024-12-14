@@ -36,10 +36,18 @@ async def on_ready():
 @client.command()
 @commands.has_permissions(administrator=True)
 async def initialize(ctx):
-    await ctx.message.delete()
-    await ctx.channel.purge()
+
+    await ctx.message.delete() # Delete the command message
+    await ctx.channel.purge() # Clear the channel
+
+    embed = discord.Embed(
+        title = 'Welcome to the Question Setup',
+        description = 'Click the button below to ask a question.',
+        color = discord.Color.blurple()
+    )
 
     await ctx.send(
+        embed = embed,
         view = QuestionSetupView()
     )
 
